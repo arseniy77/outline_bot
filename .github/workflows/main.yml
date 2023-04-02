@@ -24,3 +24,4 @@ jobs:
         with:
           push: true
           tags: arseniy77/outlinemanager_bot:latest
+          tags: arseniy77/outlinemanager_bot:latest
