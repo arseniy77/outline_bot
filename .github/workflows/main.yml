@@ -39,8 +39,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
-            whoami
-            top
             sudo docker pull arseniy77/outlinemanager_bot:latest
             sudo docker-compose stop
             sudo docker-compose rm bot
