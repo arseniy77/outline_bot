@@ -2,10 +2,10 @@ from aiogram import Bot, Dispatcher
 from aiogram.types import Message
 from aiogram.filters import Command
 
-from app.classes import OutlineUser
-from app.manager import get_all_users, get_new_user
-from app.services import print_outline_users
-from app.settings import BOT_ADMIN, BOT_TOKEN
+from src.classes import OutlineUser
+from src.manager import get_all_users, get_new_user
+from src.services import print_outline_users
+from src.settings import BOT_ADMIN, BOT_TOKEN
 
 
 API_TOKEN: str = BOT_TOKEN

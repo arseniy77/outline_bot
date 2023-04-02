@@ -1,4 +1,4 @@
-from app.classes import OutlineUser
+from src.classes import OutlineUser
 
 
 def print_outline_users(userlist: list[OutlineUser] | OutlineUser) -> str:
