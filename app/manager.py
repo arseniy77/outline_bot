@@ -4,8 +4,8 @@ from outline_api import (
     Manager)
 import urllib3
 
-from classes import OutlineUser
-import settings
+from app.classes import OutlineUser
+import app.settings as settings
 
 urllib3.disable_warnings()
 

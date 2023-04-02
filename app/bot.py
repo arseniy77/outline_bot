@@ -2,18 +2,18 @@ from aiogram import Bot, Dispatcher
 from aiogram.types import Message
 from aiogram.filters import Command
 
-from classes import OutlineUser
-from manager import get_all_users, get_new_user
-from services import print_outline_users
-from settings import BOT_ADMIN, BOT_TOKEN
+from app.classes import OutlineUser
+from app.manager import get_all_users, get_new_user
+from app.services import print_outline_users
+from app.settings import BOT_ADMIN, BOT_TOKEN
 
 
 API_TOKEN: str = BOT_TOKEN
 BOT_ADMIN: int = int(BOT_ADMIN)
 
 ADMIN_COMMANDS: str = ('/all_keys - Показать все ключи доступа\n'
-                       '/start - старт\n'
-                       '/new_key - Создать новый ключ')
+                       '/new_key - Создать новый ключ\n'
+                       '/start - старт')
 
 bot: Bot = Bot(token=API_TOKEN)
 dp: Dispatcher = Dispatcher()
