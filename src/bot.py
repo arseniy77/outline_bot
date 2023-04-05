@@ -5,7 +5,7 @@ from aiogram.filters import Command
 from src.classes import OutlineUser
 from src.manager import get_all_users, get_new_user
 from src.services import print_outline_users
-from src.settings import BOT_ADMIN, BOT_TOKEN
+from src.settings import BOT_ADMIN, BOT_TOKEN, VERSION
 
 
 API_TOKEN: str = BOT_TOKEN
@@ -21,6 +21,7 @@ dp: Dispatcher = Dispatcher()
 
 @dp.message(Command(commands=['start']))
 async def process_start_command(message: Message):
+    await message.answer(text=f'Version {VERSION}')
     if message.from_user.id == BOT_ADMIN:
         await message.answer(
             text=f'Привет, администратор {BOT_ADMIN}\n'

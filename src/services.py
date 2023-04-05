@@ -16,6 +16,6 @@ def print_outline_users(userlist: list[OutlineUser] | OutlineUser) -> str:
                      f'port: {user.port}\n'
                      f'method: {user.method}\n'
                      f'accessUrl: {user.accessUrl}\n'
-                     f'data_usage: {user.data_usage}\n'
+                     f'data_usage: {round(user.data_usage / 1048576)} MB\n'
                      f'\n')
     return response
