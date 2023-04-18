@@ -41,17 +41,9 @@ jobs:
             sudo docker pull arseniy77/outlinemanager_bot:latest
             sudo docker-compose stop
             sudo docker-compose rm bot
-
+            
             rm .env
             touch .env
-
-            echo APIURL=${{ secrets.APIURL }} >> .env
-            echo APICERT=${{ secrets.APICERT }} >> .env
-            echo BOT_TOKEN=${{ secrets.BOT_TOKEN }} >> .env
-            echo BOT_ADMIN=${{ secrets.BOT_ADMIN }} >> .env
-            
-            rm .env_test
-            touch .env_test
-            echo "${{ secrets.ENV }}" >> .env_test
+            echo "${{ secrets.ENV }}" >> .env
             
             sudo docker-compose up -d
