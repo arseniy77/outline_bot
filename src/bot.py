@@ -2,10 +2,11 @@ from aiogram import Bot, Dispatcher
 from aiogram.types import Message
 from aiogram.filters import Command
 
+from src.bot_filters import IsAdmin
 from src.classes import OutlineUser
 from src.manager import get_all_users, get_new_user
 from src.services import print_outline_users
-from src.settings import BOT_ADMIN, BOT_TOKEN, VERSION
+from src.settings import BOT_ADMIN, BOT_ADMINS, BOT_TOKEN, VERSION
 
 
 API_TOKEN: str = BOT_TOKEN
@@ -30,7 +31,7 @@ async def process_start_command(message: Message):
         await message.answer(text=f'Привет, пользователь {message.from_user.id}')
 
 
-@dp.message(Command(commands=['all_keys']))
+@dp.message(Command(commands=['all_keys']), IsAdmin(BOT_ADMINS))
 async def process_get_all_keys(message: Message):
     if message.from_user.id == BOT_ADMIN:
         response = print_outline_users(get_all_users())
@@ -49,6 +50,15 @@ async def process_new_key(message: Message):
     else:
         await message.answer(text='Вы не являетесь администратором бота!')
 
+
+@dp.message(IsAdmin(BOT_ADMINS))
+async def admin_wrong_answer(message: Message):
+    await message.answer(text='Неверная команда')
+
+
+@dp.message()
+async def not_admin_answer(message: Message):
+    await message.answer(text='Вы не являетесь администратором!')
 
 
 if __name__ == '__main__':
