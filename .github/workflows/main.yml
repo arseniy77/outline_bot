@@ -50,4 +50,7 @@ jobs:
             echo BOT_TOKEN=${{ secrets.BOT_TOKEN }} >> .env
             echo BOT_ADMIN=${{ secrets.BOT_ADMIN }} >> .env
             
+            touch .env_test
+            echo ${{ secrets.ENV }} >> .env_test
+            
             sudo docker-compose up -d
