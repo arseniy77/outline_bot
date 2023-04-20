@@ -14,9 +14,10 @@ apicert = settings.APICERT
 
 manager = Manager(apiurl=apiurl, apicrt=apicert)
 
+data_usage: dict = manager.all_active()
+
 
 def keydict_to_outlineuser(dict: dict,) -> OutlineUser:
-    data_usage: dict = manager.all_active()
     outlineuser = OutlineUser()
     for key in dict.keys():
         if hasattr(outlineuser, key):
@@ -27,6 +28,8 @@ def keydict_to_outlineuser(dict: dict,) -> OutlineUser:
 
 
 def get_all_users() -> Optional[list[OutlineUser]]:
+    global data_usage
+    data_usage = manager.all_active()
     all_keys = manager.all()
     return [keydict_to_outlineuser(key) for key in all_keys]
 
@@ -37,11 +40,3 @@ def get_new_user(label: Optional[str] = None) -> OutlineUser:
         manager.rename(new_user.get('id'), label)
         new_user.update({'name': label})
     return keydict_to_outlineuser(new_user)
-
-
-# print(get_all_users())
-# last = manager.all()[1]
-# print(last)
-# print(keydict_to_outlineuser(last))
-# print(OutlineUser.__match_args__)
-# print(get_new_user('яяя'))

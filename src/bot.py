@@ -2,7 +2,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.types import Message
 from aiogram.filters import Command
 
-from src.bot_filters import IsAdmin
+from src.bot_filters import IsAdmin, KeyNameInNewKeyCommand
 from src.classes import OutlineUser
 from src.manager import get_all_users, get_new_user
 from src.services import print_outline_users
@@ -40,10 +40,13 @@ async def process_get_all_keys(message: Message):
         await message.answer(text='Вы не являетесь администратором бота!')
 
 
-@dp.message(Command(commands=['new_key'], ))
-async def process_new_key(message: Message):
+@dp.message(Command(commands=['new_key'], ), KeyNameInNewKeyCommand())
+async def process_new_key(message: Message, name: str | None):
     if message.from_user.id == BOT_ADMIN:
-        new_user: OutlineUser = get_new_user()
+        if name:
+            new_user: OutlineUser = get_new_user(name)
+        else:
+            new_user: OutlineUser = get_new_user()
         response = print_outline_users(new_user)
         await message.answer(text=response)
         await message.answer(text=new_user.accessUrl)
