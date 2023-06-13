@@ -1,11 +1,10 @@
 from typing import Optional
 
-from outline_api import (
-    Manager)
 import urllib3
+from outline_api import Manager
 
-from src.classes import OutlineUser
 import src.settings as settings
+from src.classes import OutlineUser
 
 urllib3.disable_warnings()
 

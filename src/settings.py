@@ -1,4 +1,5 @@
 import os
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,4 +13,4 @@ BOT_ADMIN = os.getenv('BOT_ADMIN')
 adminlist: list = BOT_ADMIN.split(', ')
 BOT_ADMINS: list[int] = list(map(int, adminlist))
 
-VERSION = '1.03.2'
+VERSION = '1.04'

@@ -1,13 +1,12 @@
 from aiogram import Bot, Dispatcher
-from aiogram.types import Message
 from aiogram.filters import Command
+from aiogram.types import Message
 
 from src.bot_filters import IsAdmin, KeyNameInNewKeyCommand
 from src.classes import OutlineUser
 from src.manager import get_all_users, get_new_user
 from src.services import print_outline_users
 from src.settings import BOT_ADMIN, BOT_ADMINS, BOT_TOKEN, VERSION
-
 
 API_TOKEN: str = BOT_TOKEN
 BOT_ADMIN: int = int(BOT_ADMIN)
@@ -28,7 +27,8 @@ async def process_start_command(message: Message):
             text=f'Привет, администратор {BOT_ADMIN}\n'
                  f'{ADMIN_COMMANDS}')
     else:
-        await message.answer(text=f'Привет, пользователь {message.from_user.id}')
+        await message.answer(
+            text=f'Привет, пользователь {message.from_user.id}')
 
 
 @dp.message(Command(commands=['all_keys']), IsAdmin(BOT_ADMINS))
