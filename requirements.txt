@@ -16,6 +16,8 @@ yarl==1.8.2
 python-dotenv
 urllib3
 outline-api
+sqlalchemy
+alembic
 flake8
 flake8-broken-line
 flake8-isort

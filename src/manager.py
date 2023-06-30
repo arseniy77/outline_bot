@@ -5,6 +5,7 @@ from outline_api import Manager
 
 import src.settings as settings
 from src.classes import OutlineUser
+from src.db import session, User
 
 urllib3.disable_warnings()
 
@@ -23,6 +24,18 @@ def keydict_to_outlineuser(dict: dict,) -> OutlineUser:
             setattr(outlineuser, key, dict[key])
     if hasattr(outlineuser, 'data_usage'):
         setattr(outlineuser, 'data_usage', data_usage.get(outlineuser.id))
+    user_db = User(
+        id=outlineuser.id,
+        name=outlineuser.name,
+        password=outlineuser.password,
+        port=outlineuser.port,
+        method=outlineuser.method,
+        accessUrl=outlineuser.accessUrl,
+        data_usage=outlineuser.data_usage
+    )
+    if not session.query(User).filter(User.id == outlineuser.id).all():
+        session.add(user_db)
+        session.commit()
     return outlineuser
 
 
