@@ -1,6 +1,7 @@
 from aiogram import Bot, Dispatcher
 from aiogram.filters import Command
-from aiogram.types import Message
+from aiogram.types import (KeyboardButton, Message, ReplyKeyboardMarkup,
+                           ReplyKeyboardRemove)
 
 from src.bot_filters import IsAdmin, KeyNameInNewKeyCommand
 from src.classes import OutlineUser
@@ -18,6 +19,15 @@ ADMIN_COMMANDS: str = ('/all_keys - Показать все ключи дост�
 bot: Bot = Bot(token=API_TOKEN)
 dp: Dispatcher = Dispatcher()
 
+button_all_keys: KeyboardButton = KeyboardButton(text='/all_keys')
+button_new_key: KeyboardButton = KeyboardButton(text='/new_key')
+button_start: KeyboardButton = KeyboardButton(text='/start')
+
+keyboard: ReplyKeyboardMarkup = ReplyKeyboardMarkup(
+    keyboard=[[button_start], [button_all_keys, button_new_key]],
+    resize_keyboard=True,
+)
+
 
 @dp.message(Command(commands=['start']))
 async def process_start_command(message: Message):
@@ -25,7 +35,8 @@ async def process_start_command(message: Message):
     if message.from_user.id == BOT_ADMIN:
         await message.answer(
             text=f'Привет, администратор {BOT_ADMIN}\n'
-                 f'{ADMIN_COMMANDS}')
+                 f'{ADMIN_COMMANDS}',
+            reply_markup=keyboard)
     else:
         await message.answer(
             text=f'Привет, пользователь {message.from_user.id}')
@@ -35,9 +46,11 @@ async def process_start_command(message: Message):
 async def process_get_all_keys(message: Message):
     if message.from_user.id == BOT_ADMIN:
         response = print_outline_users(get_all_users())
-        await message.answer(text=response)
+        await message.answer(text=response,
+                             reply_markup=ReplyKeyboardRemove())
     else:
-        await message.answer(text='Вы не являетесь администратором бота!')
+        await message.answer(text='Вы не являетесь администратором бота!',
+                             reply_markup=ReplyKeyboardRemove())
 
 
 @dp.message(Command(commands=['new_key'], ), KeyNameInNewKeyCommand())
