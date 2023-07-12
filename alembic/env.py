@@ -1,15 +1,11 @@
 import os
-from dotenv import load_dotenv
-
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-from sqlalchemy import Engine
+from dotenv import load_dotenv
+from sqlalchemy import Engine, engine_from_config, pool
+from src.db import Admin, Base, User
 
 from alembic import context
-
-from src.db import Base, User
 
 load_dotenv('.env')
 

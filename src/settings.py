@@ -15,4 +15,4 @@ BOT_ADMINS: list[int] = list(map(int, adminlist))
 
 DATABASE_URL = os.getenv('DATABASE_URL')
 
-VERSION = '1.1b'
+VERSION = '1.11b'
