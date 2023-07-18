@@ -1,7 +1,8 @@
 from aiogram import Bot, Dispatcher
 from aiogram.filters import Command
-from aiogram.types import (KeyboardButton, Message, ReplyKeyboardMarkup,
-                           ReplyKeyboardRemove)
+from aiogram.types import (InlineKeyboardButton, KeyboardButton, Message,
+                           ReplyKeyboardMarkup, ReplyKeyboardRemove)
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from src.bot_filters import IsAdmin, KeyNameInNewKeyCommand
 from src.classes import OutlineUser
@@ -65,6 +66,25 @@ async def process_new_key(message: Message, name: str | None):
         await message.answer(text=new_user.accessUrl)
     else:
         await message.answer(text='Вы не являетесь администратором бота!')
+
+
+@dp.message(Command(commands=['all_keys_list'],))
+async def process_all_keys_list(message: Message):
+
+    all_users_list: list[OutlineUser] = get_all_users()
+    kb_builder: InlineKeyboardBuilder = InlineKeyboardBuilder()
+    buttons: list[InlineKeyboardButton] = [
+        InlineKeyboardButton(
+            text=user.name,
+            callback_data=f'button_{user.name}_pressed'
+        ) for user in all_users_list
+    ]
+    kb_builder.row(*buttons, width=1)
+
+    await message.answer(
+        text='Список пользователей',
+        reply_markup=kb_builder.as_markup(resize_keyboard=True)
+    )
 
 
 @dp.message(IsAdmin(BOT_ADMINS))
