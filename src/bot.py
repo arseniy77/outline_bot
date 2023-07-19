@@ -68,7 +68,7 @@ async def process_new_key(message: Message, name: str | None):
         await message.answer(text='Вы не являетесь администратором бота!')
 
 
-@dp.message(Command(commands=['all_keys_list'],))
+@dp.message(Command(commands=['all_keys_list'],), IsAdmin(BOT_ADMINS))
 async def process_all_keys_list(message: Message):
 
     all_users_list: list[OutlineUser] = get_all_users()
