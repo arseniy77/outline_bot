@@ -1,7 +1,8 @@
-from aiogram import Bot, Dispatcher
+from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
 from aiogram.types import (InlineKeyboardButton, KeyboardButton, Message,
-                           ReplyKeyboardMarkup, ReplyKeyboardRemove)
+                           ReplyKeyboardMarkup, ReplyKeyboardRemove,
+                           CallbackQuery)
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from src.bot_filters import IsAdmin, KeyNameInNewKeyCommand
@@ -84,6 +85,14 @@ async def process_all_keys_list(message: Message):
     await message.answer(
         text='Список пользователей',
         reply_markup=kb_builder.as_markup(resize_keyboard=True)
+    )
+
+
+@dp.callback_query(F.data.startswith('button_'))
+async def callback_test(callback: CallbackQuery):
+    await callback.message.answer(
+        text='test',
+        show_alert=True
     )
 
 
